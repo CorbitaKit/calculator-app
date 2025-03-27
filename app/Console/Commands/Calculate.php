@@ -13,7 +13,7 @@ class Calculate extends Command
      *
      * @var string
      */
-    protected $signature = 'app:calculate';
+    protected $signature = 'run:calculator';
 
 
 
