@@ -2,20 +2,26 @@
 
 namespace App\Services;
 
+use App\Traits\BasicMathOperation;
+use App\Traits\SquareRoot;
+
 class CalculatorService
 {
+    use SquareRoot, BasicMathOperation;
     public function execute(string $expression): int | bool
     {
         $expression = trim($expression);
 
-        if (preg_match('/^(\d+(\.\d+)?)\s*sqrt$/', $expression, $matches)) {
-            $number = (float) $matches[1];
-            return ($number >= 0) ? sqrt($number) : false;
+        $sqrtResult  = $this->executeSquareRoot($expression);
+
+        if ($sqrtResult  !== false) {
+            return $sqrtResult ;
         }
 
-        if (!preg_match('/^[-+]?(\d+(\.\d+)?)(\s*[-+\/\*]\s*[-+]?\d+(\.\d+)?)*$/', $expression)) {
+        if (!$this->basicMathOperation($expression)) {
             return false;
         }
+
         try {
             return eval("return $expression;");
         } catch (\Throwable $e) {
