@@ -8,7 +8,7 @@ use App\Traits\SquareRoot;
 class CalculatorService
 {
     use SquareRoot, BasicMathOperation;
-    public function execute(string $expression): int | bool
+    public function execute(string $expression = null): int | bool
     {
         $expression = trim($expression);
 
